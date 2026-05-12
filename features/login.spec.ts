@@ -17,5 +17,6 @@ test.describe.serial('OrangeHRM demo - authentication', () => {
   test('should render the login form before authenticating', async ({ loginPage }) => {
     await loginPage.step_navigate();
     await loginPage.verify_initialState(expected.labels);
+    
   });
 });
