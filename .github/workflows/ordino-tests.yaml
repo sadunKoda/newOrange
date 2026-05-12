@@ -2,9 +2,9 @@ name: ordino playwright tests
 
 on:
   push:
-    branches: ["main"]
+    branches: ['main']
   pull_request:
-    branches: ["main"]
+    branches: ['main']
   workflow_dispatch:
 
 jobs:
@@ -15,6 +15,16 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
+      - name: Write .env for CI
+        run: |
+          DEFAULT_URL='https://opensource-demo.orangehrmlive.com'
+          EFFECTIVE_URL="${BASE_URL:-$DEFAULT_URL}"
+          if [ -z "${BASE_URL}" ]; then
+            echo "::notice::BASE_URL Actions variable unset; using public OrangeHRM demo. Set repository variable BASE_URL to override."
+          fi
+          printf 'BASE_URL=%s\n' "${EFFECTIVE_URL}" > .env
+        env:
+          BASE_URL: ${{ vars.BASE_URL }}
       - name: Setup Node.js
         uses: actions/setup-node@v6
         with:
@@ -37,7 +47,14 @@ jobs:
           reporter: java-junit
           fail-on-error: false
 
-      - name: Upload test artifacts
+      - name: Upload JSON report (pipeline import)
+        uses: actions/upload-artifact@v6
+        if: always()
+        with:
+          name: playwright-report-json
+          path: test-results/results.json
+
+      - name: Upload full test-results report
         uses: actions/upload-artifact@v6
         if: always()
         with:
