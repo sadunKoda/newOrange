@@ -1,0 +1,30 @@
+{
+  "name": "neworange",
+  "version": "1.0.0",
+  "description": "Playwright UI tests for OrangeHRM demo (Ordino layout)",
+  "private": true,
+  "scripts": {
+    "ui:headed": "playwright test --headed --project=chromium --workers=1 --trace on",
+    "ui:headless": "playwright test --project=chromium",
+    "ui:debug": "playwright test --debug",
+    "clean": "node -e \"const fs=require('fs'); ['test-results','playwright-report'].forEach(d => fs.rmSync(d,{recursive:true,force:true})); console.log('cleaned');\"",
+    "audit": "tsc --noEmit"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sadunKoda/newOrange.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sadunKoda/newOrange/issues"
+  },
+  "homepage": "https://github.com/sadunKoda/newOrange#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.60.0",
+    "@types/node": "^25.7.0",
+    "dotenv": "^17.4.2",
+    "typescript": "^6.0.3"
+  }
+}
